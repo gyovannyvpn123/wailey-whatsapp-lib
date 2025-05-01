@@ -105,6 +105,37 @@ npm install wailey-whatsapp-lib
 ```
 
 <<<<<<< HEAD
+
+## Generare Cod de Asociere pentru WhatsApp
+
+Biblioteca suportă generarea codurilor de asociere pentru autentificare prin număr de telefon, fără a necesita scanarea unui cod QR în prealabil.
+
+```javascript
+const { create } = require('wailey-whatsapp-lib');
+
+async function example() {
+  const client = create({
+    printQRInTerminal: false,
+    sessionPath: './session'
+  });
+  
+  client.on('pairing_code', (code) => {
+    console.log(`Cod de asociere: ${code}`);
+    console.log('Introdu acest cod în aplicația WhatsApp pe telefonul tău');
+  });
+  
+  await client.initialize();
+  
+  // Solicită cod de asociere pentru numărul tău
+  await client.requestPairingCode('40712345678');
+}
+
+example();
+```
+
+Vezi `examples/pairing-code-example.js` pentru un exemplu complet.
+
+
 ### Instalare via yarn:
 
 ```bash
