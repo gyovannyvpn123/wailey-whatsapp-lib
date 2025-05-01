@@ -51,6 +51,7 @@ if (fs.existsSync(path.join(waileyPath, 'lib', 'client.js'))) {
     const exampleFilePath = path.join(process.cwd(), 'test-wailey.js');
     const exampleCode = `/**
  * Test pentru biblioteca wailey-whatsapp-lib
+ * Versiune corectată fără erori de sintaxă
  */
 
 const { create, Events } = require('wailey-whatsapp-lib');
@@ -68,22 +69,22 @@ try {
         browser: ['Ubuntu', 'Chrome', '114.0.0']
     });
     
-    console.log('\nVerificare metode client:');
+    console.log('Verificare metode client:');
     console.log('- initialize:', typeof client.initialize === 'function' ? '✅ OK' : '❌ Lipsește');
     console.log('- requestPairingCode:', typeof client.requestPairingCode === 'function' ? '✅ OK' : '❌ Lipsește');
     console.log('- getQrCode:', typeof client.getQrCode === 'function' ? '✅ OK' : '❌ Lipsește');
     console.log('- sendTextMessage:', typeof client.sendTextMessage === 'function' ? '✅ OK' : '❌ Lipsește');
     
-    console.log('\n✅ Biblioteca a fost importată cu succes și toate metodele sunt disponibile!');
+    console.log('Biblioteca a fost importată cu succes și toate metodele sunt disponibile!');
     console.log('Pentru a testa funcționalitatea completă, rulează:');
     console.log('node test-wailey.js run');
 } catch (error) {
-    console.error('\n❌ Eroare la crearea clientului:', error.message);
+    console.error('Eroare la crearea clientului:', error.message);
 }
 
 // Dacă argumentul 'run' este prezent, vom executa și un test real
 if (process.argv.includes('run')) {
-    console.log('\nRulăm testul de funcționalitate reală...');
+    console.log('Rulăm testul de funcționalitate reală...');
     
     const readline = require('readline');
     
@@ -109,13 +110,13 @@ if (process.argv.includes('run')) {
             });
             
             client.on(Events.PAIRING_CODE || 'pairing_code', (code) => {
-                console.log(\`\nCod de asociere primit: \${code}\`);
+                console.log('Cod de asociere primit: ' + code);
                 console.log('Introdu acest cod în aplicația WhatsApp pe telefonul tău.');
                 console.log('Mergi la Setări > Dispozitive conectate > Conectează un dispozitiv > Introdu codul');
             });
             
             client.on(Events.AUTHENTICATED || 'authenticated', () => {
-                console.log('\nAutentificat cu succes!');
+                console.log('Autentificat cu succes!');
                 setTimeout(() => {
                     client.disconnect().then(() => {
                         rl.close();
@@ -129,7 +130,7 @@ if (process.argv.includes('run')) {
             
             rl.question('Introdu numărul tău de telefon (ex: 40712345678): ', async (phoneNumber) => {
                 try {
-                    console.log(\`\nSolicit cod de asociere pentru numărul \${phoneNumber}...\`);
+                    console.log('Solicit cod de asociere pentru numărul ' + phoneNumber + '...');
                     await client.requestPairingCode(phoneNumber);
                     console.log('Așteaptă să primești codul de asociere...');
                 } catch (error) {
@@ -137,7 +138,7 @@ if (process.argv.includes('run')) {
                     
                     if (error.message.includes('scan the QR code first') || 
                         error.message.includes('Precondition Required')) {
-                        console.log('\n⚠️ WhatsApp cere scanarea codului QR pentru prima autentificare.');
+                        console.log('⚠️ WhatsApp cere scanarea codului QR pentru prima autentificare.');
                         console.log('▶️ Te rog să scanezi codul QR afișat anterior cu telefonul.');
                     }
                 }
@@ -149,8 +150,7 @@ if (process.argv.includes('run')) {
     }
     
     runRealTest().catch(console.error);
-}
-`;
+}`;
 
     fs.writeFileSync(exampleFilePath, exampleCode);
     console.log(`✅ Exemplu creat: ${exampleFilePath}`);
