@@ -1,84 +1,64 @@
 /**
- * Exemplu de generare cod de asociere pentru WhatsApp
- * Folosind wailey-whatsapp-lib cu implementarea reparată pentru coduri de asociere
+ * Exemplu de utilizare a codului de asociere
+ * Acest script demonstrează cum să obțineți și să utilizați un cod de asociere
+ * pentru autentificare în WhatsApp Web
  */
 
-const { create } = require('../index');
+const { create, Events } = require('wailey-whatsapp-lib');
 const readline = require('readline');
 
-// Funcție pentru a formata numărul de telefon
-function formatPhoneNumber(phoneNumber) {
-  const cleaned = phoneNumber.replace(/\D/g, '');
-  
-  // Adaugă prefixul pentru România dacă nu există
-  if (cleaned.startsWith('0')) {
-    return '40' + cleaned.substring(1);
-  }
-  
-  return cleaned;
-}
-
-async function main() {
-  // Creare interfață readline pentru input interactiv
-  const rl = readline.createInterface({
+// Creează interfața readline pentru input de la utilizator
+const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
-  });
-  
-  console.log('Exemplu de generare cod de asociere pentru WhatsApp\n');
-  
-  rl.question('Introdu numărul tău de telefon (ex: 0712345678): ', async (phoneNumber) => {
-    const formattedPhone = formatPhoneNumber(phoneNumber);
-    
-    console.log(`\nUtilizare număr: ${formattedPhone}`);
-    console.log('Inițializare client WhatsApp...');
-    
+});
+
+// Funcție pentru a citi input de la utilizator
+const question = (query) => new Promise(resolve => rl.question(query, resolve));
+
+async function main() {
     try {
-      // Creare client WhatsApp
-      const client = create({
-        printQRInTerminal: false,  // Dezactivăm afișarea codului QR
-        sessionPath: './session',
-      });
-      
-      // Listener pentru cod de asociere
-      client.on('pairing_code', (code) => {
-        console.log(`\nCod de asociere primit: ${code}`);
-        console.log('Introdu acest cod în aplicația WhatsApp pe telefonul tău.');
-      });
-      
-      // Listener pentru autentificare
-      client.on('authenticated', () => {
-        console.log('\nAutentificare reușită!');
-      });
-      
-      // Listener pentru client gata
-      client.on('ready', () => {
-        console.log('\nClient WhatsApp gata de utilizare!');
-        // Acum puteți trimite mesaje, etc.
+        // Solicită numărul de telefon
+        const phoneNumber = await question('Introdu numărul tău de telefon (ex: 40712345678): ');
+        console.log(`\nUtilizare număr: ${phoneNumber}`);
         
-        setTimeout(() => {
-          client.destroy().then(() => {
-            console.log('Client închis.');
+        // Crează clientul
+        const client = create({
+            sessionPath: './session_' + phoneNumber,
+            printQRInTerminal: false
+        });
+        
+        // Ascultă pentru evenimente
+        client.on(Events.ERROR, (error) => {
+            console.error('Eroare:', error.message);
+        });
+        
+        client.on(Events.AUTHENTICATED, (user) => {
+            console.log(`\nAutentificat cu succes ca: ${user.name} (${user.phone})`);
             rl.close();
             process.exit(0);
-          });
-        }, 3000);
-      });
-      
-      // Inițializare client
-      await client.initialize();
-      
-      // Solicită cod de asociere
-      console.log(`\nSolicit cod de asociere pentru: ${formattedPhone}`);
-      await client.requestPairingCode(formattedPhone);
-      
+        });
+        
+        // Inițializează clientul
+        console.log('Inițializare client WhatsApp...\n');
+        await client.initialize();
+        
+        // Solicită codul de asociere
+        console.log('Solicit cod de asociere pentru numărul ' + phoneNumber);
+        const pairingCode = await client.requestPairingCode(phoneNumber);
+        
+        console.log('\nAceasta este codul tău de asociere: ' + pairingCode);
+        console.log('Deschide WhatsApp și introdu acest cod în dispozitivul conectat');
+        
+        // Așteaptă ca utilizatorul să introducă codul
+        console.log('\nAștept autentificarea... (apasă Ctrl+C pentru a anula)');
+        
     } catch (error) {
-      console.error('Eroare:', error.message);
-      rl.close();
+        console.error('Eroare generală:', error.message);
+        rl.close();
+        process.exit(1);
     }
-  });
 }
 
-main().catch(err => {
-  console.error('Eroare neașteptată:', err);
-});
+// Pornește aplicația
+main().catch(console.error);
