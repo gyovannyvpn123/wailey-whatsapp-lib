@@ -65,7 +65,56 @@
 - Node.js (v14+)
 - npm sau yarn
 
-### Instalare via npm:
+#
+## Cod de Asociere (Pairing Code)
+
+Această versiune a bibliotecii suportă autentificarea prin cod de asociere numeric, fără a necesita scanarea codului QR.
+
+### Cum funcționează:
+
+1. Inițializați clientul cu opțiunile dorite
+2. Apelați metoda `requestPairingCode` cu numărul de telefon în format internațional
+3. Primiți un cod de asociere format din 8 caractere
+4. Introduceți acest cod în aplicația WhatsApp de pe telefon
+
+### Exemplu de cod:
+
+```javascript
+const whatsapp = require('wailey-whatsapp-lib');
+
+async function main() {
+    // Creați și inițializați clientul
+    const client = whatsapp.create({
+        sessionPath: './session',
+        printQRInTerminal: false
+    });
+    
+    await client.initialize();
+    
+    // Solicitați codul de asociere (număr în format internațional)
+    const pairingCode = await client.requestPairingCode('40712345678');
+    
+    console.log('Codul de asociere:', pairingCode);
+    console.log('Introduceți acest cod în aplicația WhatsApp pe telefonul dvs.');
+    
+    // Așteptați autentificarea
+    client.on('authenticated', (user) => {
+        console.log('Autentificat ca:', user.name);
+    });
+}
+
+main().catch(console.error);
+```
+
+### Instrucțiuni pentru utilizator:
+
+1. Deschideți WhatsApp pe telefonul mobil
+2. Mergeți la Setări > Dispozitive conectate > Conectează un dispozitiv
+3. La ecranul cu codul QR, apăsați pe "Conectează cu număr"
+4. Introduceți codul afișat de script
+
+
+## Instalare via npm:
 =======
 <<<<<<< HEAD
 # Wailey WhatsApp Library
@@ -78,6 +127,55 @@ O biblioteca WhatsApp Web API modificată care suportă atât autentificarea pri
 - ✅ Autentificare prin Cod de Asociere (pairing code)
 - ✅ Mod Demo pentru testare fără numere reale
 - ✅ Optimizat pentru conexiuni stabile
+
+
+## Cod de Asociere (Pairing Code)
+
+Această versiune a bibliotecii suportă autentificarea prin cod de asociere numeric, fără a necesita scanarea codului QR.
+
+### Cum funcționează:
+
+1. Inițializați clientul cu opțiunile dorite
+2. Apelați metoda `requestPairingCode` cu numărul de telefon în format internațional
+3. Primiți un cod de asociere format din 8 caractere
+4. Introduceți acest cod în aplicația WhatsApp de pe telefon
+
+### Exemplu de cod:
+
+```javascript
+const whatsapp = require('wailey-whatsapp-lib');
+
+async function main() {
+    // Creați și inițializați clientul
+    const client = whatsapp.create({
+        sessionPath: './session',
+        printQRInTerminal: false
+    });
+    
+    await client.initialize();
+    
+    // Solicitați codul de asociere (număr în format internațional)
+    const pairingCode = await client.requestPairingCode('40712345678');
+    
+    console.log('Codul de asociere:', pairingCode);
+    console.log('Introduceți acest cod în aplicația WhatsApp pe telefonul dvs.');
+    
+    // Așteptați autentificarea
+    client.on('authenticated', (user) => {
+        console.log('Autentificat ca:', user.name);
+    });
+}
+
+main().catch(console.error);
+```
+
+### Instrucțiuni pentru utilizator:
+
+1. Deschideți WhatsApp pe telefonul mobil
+2. Mergeți la Setări > Dispozitive conectate > Conectează un dispozitiv
+3. La ecranul cu codul QR, apăsați pe "Conectează cu număr"
+4. Introduceți codul afișat de script
+
 
 ## Instalare
 =======
@@ -136,13 +234,111 @@ example();
 Vezi `examples/pairing-code-example.js` pentru un exemplu complet.
 
 
-### Instalare via yarn:
+#
+## Cod de Asociere (Pairing Code)
+
+Această versiune a bibliotecii suportă autentificarea prin cod de asociere numeric, fără a necesita scanarea codului QR.
+
+### Cum funcționează:
+
+1. Inițializați clientul cu opțiunile dorite
+2. Apelați metoda `requestPairingCode` cu numărul de telefon în format internațional
+3. Primiți un cod de asociere format din 8 caractere
+4. Introduceți acest cod în aplicația WhatsApp de pe telefon
+
+### Exemplu de cod:
+
+```javascript
+const whatsapp = require('wailey-whatsapp-lib');
+
+async function main() {
+    // Creați și inițializați clientul
+    const client = whatsapp.create({
+        sessionPath: './session',
+        printQRInTerminal: false
+    });
+    
+    await client.initialize();
+    
+    // Solicitați codul de asociere (număr în format internațional)
+    const pairingCode = await client.requestPairingCode('40712345678');
+    
+    console.log('Codul de asociere:', pairingCode);
+    console.log('Introduceți acest cod în aplicația WhatsApp pe telefonul dvs.');
+    
+    // Așteptați autentificarea
+    client.on('authenticated', (user) => {
+        console.log('Autentificat ca:', user.name);
+    });
+}
+
+main().catch(console.error);
+```
+
+### Instrucțiuni pentru utilizator:
+
+1. Deschideți WhatsApp pe telefonul mobil
+2. Mergeți la Setări > Dispozitive conectate > Conectează un dispozitiv
+3. La ecranul cu codul QR, apăsați pe "Conectează cu număr"
+4. Introduceți codul afișat de script
+
+
+## Instalare via yarn:
 
 ```bash
 yarn add wailey-whatsapp-lib
 ```
 
-### Instalare directă din GitHub:
+#
+## Cod de Asociere (Pairing Code)
+
+Această versiune a bibliotecii suportă autentificarea prin cod de asociere numeric, fără a necesita scanarea codului QR.
+
+### Cum funcționează:
+
+1. Inițializați clientul cu opțiunile dorite
+2. Apelați metoda `requestPairingCode` cu numărul de telefon în format internațional
+3. Primiți un cod de asociere format din 8 caractere
+4. Introduceți acest cod în aplicația WhatsApp de pe telefon
+
+### Exemplu de cod:
+
+```javascript
+const whatsapp = require('wailey-whatsapp-lib');
+
+async function main() {
+    // Creați și inițializați clientul
+    const client = whatsapp.create({
+        sessionPath: './session',
+        printQRInTerminal: false
+    });
+    
+    await client.initialize();
+    
+    // Solicitați codul de asociere (număr în format internațional)
+    const pairingCode = await client.requestPairingCode('40712345678');
+    
+    console.log('Codul de asociere:', pairingCode);
+    console.log('Introduceți acest cod în aplicația WhatsApp pe telefonul dvs.');
+    
+    // Așteptați autentificarea
+    client.on('authenticated', (user) => {
+        console.log('Autentificat ca:', user.name);
+    });
+}
+
+main().catch(console.error);
+```
+
+### Instrucțiuni pentru utilizator:
+
+1. Deschideți WhatsApp pe telefonul mobil
+2. Mergeți la Setări > Dispozitive conectate > Conectează un dispozitiv
+3. La ecranul cu codul QR, apăsați pe "Conectează cu număr"
+4. Introduceți codul afișat de script
+
+
+## Instalare directă din GitHub:
 
 ```bash
 npm install git+https://github.com/gyovannyvpn123/wailey-whatsapp-lib.git
