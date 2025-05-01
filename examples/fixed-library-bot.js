@@ -3,7 +3,8 @@
  * Acest script demonstrează că funcția requestPairingCode funcționează corect
  */
 
-const { create, Events } = require('./index.js');
+// Importăm biblioteca folosind o cale corectă
+const { create, Events } = require('../index.js');
 const readline = require('readline');
 
 // Creăm interfața readline
@@ -35,18 +36,18 @@ async function main() {
             console.error('Eroare:', error.message);
         });
         
-        client.on(Events.QR_RECEIVED, (qr) => {
+        client.on(Events.QR_RECEIVED || 'qr', (qr) => {
             console.log('Cod QR primit. Scanează-l cu telefonul sau așteaptă pentru cod de asociere.');
         });
         
-        client.on(Events.PAIRING_CODE, (code) => {
+        client.on(Events.PAIRING_CODE || 'pairing_code', (code) => {
             console.log(`\nCod de asociere primit: ${code}`);
             console.log('Introdu acest cod în aplicația WhatsApp pe telefonul tău.');
             console.log('Mergi la Setări > Dispozitive conectate > Conectează un dispozitiv > Introdu codul');
         });
         
-        client.on(Events.AUTHENTICATED, (user) => {
-            console.log(`\nAutentificat cu succes ca: ${user.name || 'utilizator WhatsApp'}`);
+        client.on(Events.AUTHENTICATED || 'authenticated', (user) => {
+            console.log(`\nAutentificat cu succes ca: ${user?.name || 'utilizator WhatsApp'}`);
             console.log('Poți începe să trimiți mesaje!');
             
             // Închide clientul după autentificare în acest exemplu
@@ -54,6 +55,10 @@ async function main() {
                 client.disconnect().then(() => {
                     rl.close();
                     process.exit(0);
+                }).catch(err => {
+                    console.error('Eroare la deconectare:', err);
+                    rl.close();
+                    process.exit(1);
                 });
             }, 3000);
         });
