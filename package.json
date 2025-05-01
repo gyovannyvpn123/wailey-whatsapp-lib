@@ -1,6 +1,6 @@
 {
   "name": "wailey-whatsapp-lib",
-  "version": "4.4.1",
+  "version": "4.4.5",
   "description": "A robust WhatsApp library for Node.js with support for QR code and pairing code authentication",
   "main": "index.js",
   "directories": {
