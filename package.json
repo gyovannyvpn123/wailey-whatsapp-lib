@@ -1,0 +1,51 @@
+{
+  "name": "wailey-whatsapp-lib",
+  "version": "4.4.1",
+  "description": "A robust WhatsApp library for Node.js with support for QR code and pairing code authentication",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test",
+    "examples": "examples"
+  },
+  "scripts": {
+    "test": "node test/connection.test.js",
+    "qr-login": "node examples/qrLogin.js",
+    "pairing-login": "node examples/pairingCodeLogin.js",
+    "start": "node examples/qrLogin.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "whatsapp-web",
+    "whatsapp-api",
+    "whatsapp-library",
+    "baileys",
+    "qr-authentication",
+    "pairing-code",
+    "message-sending",
+    "chat-bot",
+    "automation"
+  ],
+  "author": "gyovannyvpn123",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gyovannyvpn123/wailey-whatsapp-lib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gyovannyvpn123/wailey-whatsapp-lib/issues"
+  },
+  "homepage": "https://github.com/gyovannyvpn123/wailey-whatsapp-lib#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.17.16",
+    "pino": "^9.6.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
